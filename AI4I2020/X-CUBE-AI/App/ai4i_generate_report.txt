@@ -1,0 +1,172 @@
+ST Edge AI Core v1.0.0-19899
+Created date          : 2025-03-23 16:47:07
+Parameters            : generate --target stm32l4 --name ai4i -m /Users/fabiensaliba/Embedded_AI/modeleAI4I2020.h5 --compression none --verbosity 1 --allocate-inputs --allocate-outputs --workspace /var/folders/n4/6htbtx8s22ncx3c03bzc2t780000gn/T/mxAI_workspace4395385909575005055955533685756536 --output /Users/fabiensaliba/.stm32cubemx/ai4i_output
+
+Exec/report summary (generate)
+---------------------------------------------------------------------------------------------------------------------------
+model file         :   /Users/fabiensaliba/Embedded_AI/modeleAI4I2020.h5                                                   
+type               :   keras                                                                                               
+c_name             :   ai4i                                                                                                
+compression        :   none                                                                                                
+options            :   allocate-inputs, allocate-outputs                                                                   
+optimization       :   balanced                                                                                            
+target/series      :   stm32l4                                                                                             
+workspace dir      :   /var/folders/n4/6htbtx8s22ncx3c03bzc2t780000gn/T/mxAI_workspace4395385909575005055955533685756536   
+output dir         :   /Users/fabiensaliba/.stm32cubemx/ai4i_output                                                        
+model_fmt          :   float                                                                                               
+model_name         :   modeleAI4I2020                                                                                      
+model_hash         :   0x009316254db21038a14fa1e4b3790029                                                                  
+params #           :   11,845 items (46.27 KiB)                                                                            
+---------------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'input_0', f32(1x6), 24 Bytes, activations                                                          
+output 1/1         :   'dense_3', f32(1x5), 20 Bytes, activations                                                          
+macc               :   11,671                                                                                              
+weights (ro)       :   45,588 B (44.52 KiB) (1 segment) / -1,792(-3.8%) vs float model                                     
+activations (rw)   :   768 B (768 B) (1 segment) *                                                                         
+ram (total)        :   768 B (768 B) = 768 + 0 + 0                                                                         
+---------------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers can be used from the activations buffer
+
+Model name - modeleAI4I2020
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+m_id   layer (type,original)                                   oshape        param/size        macc            connected to   | c_size            c_macc            c_type                          
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+0      input_0 (Input, None)                                   [b:1,c:6]                                                      | +3,584(+100.0%)   +1,024(+100.0%)   Dense_/Nonlinearity_[0, 1]      
+       dense_dense (Dense, Dense)                              [b:1,c:128]   896/3,584          896                 input_0   | -3,584(-100.0%)   -896(-100.0%)     
+       dense (Nonlinearity, Dense)                             [b:1,c:128]                      128             dense_dense   |                   -128(-100.0%)     
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+1      batch_normalization (ScaleBias, BatchNormalization)     [b:1,c:128]   256/1,024          256                   dense   | -1,024(-100.0%)   -256(-100.0%)     
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+3      dense_1_dense (Dense, Dense)                            [b:1,c:64]    8,256/33,024     8,256     batch_normalization   |                   +64(+0.8%)        Dense_/Nonlinearity_[2, 3]      
+       dense_1 (Nonlinearity, Dense)                           [b:1,c:64]                        64           dense_1_dense   |                   -64(-100.0%)      
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+4      batch_normalization_1 (ScaleBias, BatchNormalization)   [b:1,c:64]    128/512            128                 dense_1   | -512(-100.0%)     -128(-100.0%)     
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+6      dense_2_dense (Dense, Dense)                            [b:1,c:32]    2,080/8,320      2,080   batch_normalization_1   |                   +32(+1.5%)        Dense_/Nonlinearity_[4, 5]      
+       dense_2 (Nonlinearity, Dense)                           [b:1,c:32]                        32           dense_2_dense   |                   -32(-100.0%)      
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+7      batch_normalization_2 (ScaleBias, BatchNormalization)   [b:1,c:32]    64/256              64                 dense_2   | -256(-100.0%)     -64(-100.0%)      
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+9      dense_3_dense (Dense, Dense)                            [b:1,c:5]     165/660            165   batch_normalization_2   |                   +50(+30.3%)       Dense_/Nonlinearity_[o][6, 7]   
+       dense_3 (Nonlinearity, Dense)                           [b:1,c:5]                         50           dense_3_dense   |                   -50(-100.0%)      
+------ ------------------------------------------------------- ------------- -------------- ------- ----------------------- --- ----------------- ----------------- ------------------------------- 
+model/c-model: macc=12,119/11,671 -448(-3.7%) weights=47,380/45,588 -1,792(-3.8%) activations=--/768 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : modeleAI4I2020
+c-name                : ai4i
+c-node #              : 8
+c-array #             : 17
+activations size      : 768 (1 segment)
+weights size          : 45588 (1 segment)
+macc                  : 11671
+inputs                : ['input_0_output']
+outputs               : ['dense_3_output']
+
+C-Arrays (17)
+------ ----------------------- ------------ ------------------------- ------------- --------- 
+c_id   name (*_array)          item/size    domain/mem-pool           c-type        comment   
+------ ----------------------- ------------ ------------------------- ------------- --------- 
+0      dense_1_dense_bias      64/256       weights/weights           const float             
+1      dense_1_dense_output    64/256       activations/**default**   float                   
+2      dense_1_dense_weights   8192/32768   weights/weights           const float             
+3      dense_1_output          64/256       activations/**default**   float                   
+4      dense_2_dense_bias      32/128       weights/weights           const float             
+5      dense_2_dense_output    32/128       activations/**default**   float                   
+6      dense_2_dense_weights   2048/8192    weights/weights           const float             
+7      dense_2_output          32/128       activations/**default**   float                   
+8      dense_3_dense_bias      5/20         weights/weights           const float             
+9      dense_3_dense_output    5/20         activations/**default**   float                   
+10     dense_3_dense_weights   160/640      weights/weights           const float             
+11     dense_3_output          5/20         activations/**default**   float         /output   
+12     dense_dense_bias        128/512      weights/weights           const float             
+13     dense_dense_output      128/512      activations/**default**   float                   
+14     dense_dense_weights     768/3072     weights/weights           const float             
+15     dense_output            128/512      activations/**default**   float                   
+16     input_0_output          6/24         activations/**default**   float         /input    
+------ ----------------------- ------------ ------------------------- ------------- --------- 
+
+C-Layers (8)
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+c_id   name (*_layer)   id   layer_type      macc   rom     tensors                    shape (array id)   
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+0      dense_dense      0    Dense           896    3584    I: input_0_output          f32(1x6) (16)      
+                                                            W: dense_dense_weights     f32(128x6) (14)    
+                                                            W: dense_dense_bias        f32(128) (12)      
+                                                            O: dense_dense_output      f32(1x128) (13)    
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+1      dense            0    Nonlinearity    128    0       I: dense_dense_output      f32(1x128) (13)    
+                                                            O: dense_output            f32(1x128) (15)    
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+2      dense_1_dense    3    Dense           8256   33024   I: dense_output            f32(1x128) (15)    
+                                                            W: dense_1_dense_weights   f32(64x128) (2)    
+                                                            W: dense_1_dense_bias      f32(64) (0)        
+                                                            O: dense_1_dense_output    f32(1x64) (1)      
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+3      dense_1          3    Nonlinearity    64     0       I: dense_1_dense_output    f32(1x64) (1)      
+                                                            O: dense_1_output          f32(1x64) (3)      
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+4      dense_2_dense    6    Dense           2080   8320    I: dense_1_output          f32(1x64) (3)      
+                                                            W: dense_2_dense_weights   f32(32x64) (6)     
+                                                            W: dense_2_dense_bias      f32(32) (4)        
+                                                            O: dense_2_dense_output    f32(1x32) (5)      
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+5      dense_2          6    Nonlinearity    32     0       I: dense_2_dense_output    f32(1x32) (5)      
+                                                            O: dense_2_output          f32(1x32) (7)      
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+6      dense_3_dense    9    Dense           165    660     I: dense_2_output          f32(1x32) (7)      
+                                                            W: dense_3_dense_weights   f32(5x32) (10)     
+                                                            W: dense_3_dense_bias      f32(5) (8)         
+                                                            O: dense_3_dense_output    f32(1x5) (9)       
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+7      dense_3          9    Nonlinearity    50     0       I: dense_3_dense_output    f32(1x5) (9)       
+                                                            O: dense_3_output          f32(1x5) (11)      
+------ ---------------- ---- --------------- ------ ------- -------------------------- ------------------ 
+
+
+
+Number of operations per c-layer
+------- ------ ------------------------ -------- -------------- 
+c_id    m_id   name (type)                   #op           type 
+------- ------ ------------------------ -------- -------------- 
+0       0      dense_dense (Dense)           896   smul_f32_f32 
+1       0      dense (Nonlinearity)          128     op_f32_f32 
+2       3      dense_1_dense (Dense)       8,256   smul_f32_f32 
+3       3      dense_1 (Nonlinearity)         64     op_f32_f32 
+4       6      dense_2_dense (Dense)       2,080   smul_f32_f32 
+5       6      dense_2 (Nonlinearity)         32     op_f32_f32 
+6       9      dense_3_dense (Dense)         165   smul_f32_f32 
+7       9      dense_3 (Nonlinearity)         50     op_f32_f32 
+------- ------ ------------------------ -------- -------------- 
+total                                     11,671 
+
+Number of operation types
+---------------- -------- ----------- 
+operation type          #           % 
+---------------- -------- ----------- 
+smul_f32_f32       11,397       97.7% 
+op_f32_f32            274        2.3% 
+
+Complexity report (model)
+------ --------------- ------------------------- ------------------------- -------- 
+m_id   name            c_macc                    c_rom                     c_id     
+------ --------------- ------------------------- ------------------------- -------- 
+0      input_0         ||                 8.8%   ||                 7.9%   [0, 1]   
+3      dense_1_dense   ||||||||||||||||  71.3%   ||||||||||||||||  72.4%   [2, 3]   
+6      dense_2_dense   ||||              18.1%   ||||              18.3%   [4, 5]   
+9      dense_3_dense   |                  1.8%   |                  1.4%   [6, 7]   
+------ --------------- ------------------------- ------------------------- -------- 
+macc=11,671 weights=45,588 act=768 ram_io=0
+
+Generated files (7)
+----------------------------------------------------------------- 
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i_data_params.h   
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i_data_params.c   
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i_data.h          
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i_data.c          
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i_config.h        
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i.h               
+/Users/fabiensaliba/.stm32cubemx/ai4i_output/ai4i.c               
